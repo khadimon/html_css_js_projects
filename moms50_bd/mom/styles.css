@@ -87,6 +87,29 @@ h1, h2 {
   animation: fadeFloatIn 2s ease-out forwards;
 }
 
+@media (max-width: 768px) {
+  body {
+    padding: 12px;
+  }
+
+  .happy-birthday {
+    font-size: 4.5rem;
+    top: 16%;
+    letter-spacing: 0.03em;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 8px;
+  }
+
+  .happy-birthday {
+    font-size: 3.6rem;
+    top: 18%;
+  }
+}
+
 @keyframes fadeFloatIn {
   from {
     opacity: 0;
