@@ -191,7 +191,7 @@ function runGarden() {
           zIndex: 10,
           offset: false,
           yNudgeMag: 2,
-          gapPx: 10,
+          gapPx: 2,
           startHidden: true
         });
 
@@ -204,7 +204,7 @@ function runGarden() {
           zIndex: 9,
           offset: false,
           yNudgeMag: 4,
-          gapPx: 10,
+          gapPx: 2,
           startHidden: true
         });
 
@@ -216,7 +216,7 @@ function runGarden() {
           zIndex: 8,
           offset: false,
           yNudgeMag: 6,
-          gapPx: 10,
+          gapPx: 2,
           startHidden: true
         });
 
@@ -228,7 +228,7 @@ function runGarden() {
           zIndex: 7,
           offset: true, // offset so this row sits under the gaps of the middle row
           yNudgeMag: 8,
-          gapPx: 10,
+          gapPx: 2,
           startHidden: true
         });
 
@@ -240,7 +240,7 @@ function runGarden() {
           zIndex: 3,
           offset: false,
           yNudgeMag: 8,
-          gapPx: 10,
+          gapPx: 2,
           startHidden: true
         });
 
