@@ -7,6 +7,26 @@
   font-size: clamp(12px, 1vw, 18px);
 }
 
+/* Body font styling */
+body {
+  font-family: 'Pacifico', 'Comic Sans MS', cursive;
+  padding: 20px;
+  margin: 0;
+}
+
+/* Flower color variables */
+:root {
+  --petal-main: #4A90E2;
+  --petal-light: #B3D9FF;
+  --petal-shadow: #3F6FB5;
+}
+
+/* Heading styles */
+h1, h2 {
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
 /* Desktop (default) */
 .container {
   display: grid;
@@ -35,13 +55,13 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  padding: 30px 20px 20px 20px;
+  padding: 30px 0 20px 0;
   margin-top: 20px;
 }
 
 .disney-text {
   font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
-  font-size: 3.2rem;
+  font-size: 4.5rem;
   font-weight: 900;
   font-style: italic;
   color: #FFFB00;
@@ -49,6 +69,33 @@
   letter-spacing: 2px;
   transform: none;
   filter: drop-shadow(0px 6px 12px rgba(0,0,0,0.4));
+}
+
+.happy-birthday {
+  font-family: 'Pacifico', cursive;
+  color: #FFF1C1;
+  font-size: 7rem;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    0 0 12px rgba(255, 215, 120, 0.35);
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fadeFloatIn 2s ease-out forwards;
+}
+
+@keyframes fadeFloatIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
 .letter {
@@ -98,10 +145,10 @@
   }
 }
 
-/* Hide flowers initially until 3s after page load */
+/* Hide flowers initially until 2s after page load */
 .flowers {
   opacity: 0;
-  animation: fadeInFlowers 0.8s ease-in forwards 3s;
+  animation: fadeInFlowers 0.8s ease-in forwards 2s;
 }
 
 @keyframes fadeInFlowers {
@@ -187,6 +234,9 @@
 
 /* ===== Flower garden ===== */
 :root {
+  --petal-main: #4A90E2;
+  --petal-light: #B3D9FF;
+  --petal-shadow: #3F6FB5;
   --h-margin: 3vw; /* horizontal safe margin */
   --stage-scale: 1;
 }
