@@ -8,18 +8,13 @@ let currentScene = 0;
 
 function scaleScene() {
   if (!stage) return;
-  const baseW = 1400;
-  const baseH = 900;
+  const rootStyles = getComputedStyle(document.documentElement);
+  const baseW = parseFloat(rootStyles.getPropertyValue('--design-width')) || 1440;
+  const baseH = parseFloat(rootStyles.getPropertyValue('--design-height')) || 900;
   const scaleX = window.innerWidth / baseW;
   const scaleY = window.innerHeight / baseH;
-  const scale = Math.min(scaleX, scaleY, 1);
-  stage.style.width = `${baseW}px`;
-  stage.style.height = `${baseH}px`;
+  const scale = Math.min(scaleX, scaleY);
   stage.style.setProperty('--scale', scale);
-  stage.style.position = 'fixed';
-  stage.style.top = '50%';
-  stage.style.left = '50%';
-  stage.style.transformOrigin = 'center center';
 }
 
 scaleScene();
