@@ -1,0 +1,93 @@
+.scene {
+  position: fixed;
+  inset: 0;
+  display: none;
+  background: radial-gradient(circle at bottom, #140000, #000);
+}
+
+.scene.active {
+  display: block;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  transform-origin: center bottom;
+  transition: transform 3s ease;
+}
+
+/* Camera zoom per scene */
+#scene1 .stage { transform: scale(1); }
+#scene2 .stage { transform: scale(0.85); }
+#scene3 .stage { transform: scale(0.7); }
+#scene4 .stage { transform: scale(0.55); }
+
+.text {
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  text-align: center;
+  color: #ffdede;
+  font-size: 1.5rem;
+  z-index: 10;
+}
+
+.click {
+  position: absolute;
+  bottom: 5%;
+  width: 100%;
+  text-align: center;
+  color: #ffb3b3;
+  cursor: pointer;
+}
+
+.flower-set {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+.flower-set:nth-child(n+10) {
+  opacity: 0.6;
+  filter: blur(1px);
+}
+
+.flower-set:nth-child(n+15) {
+  opacity: 0.4;
+  filter: blur(2px);
+}
+
+
+/* ===== Flower garden ===== */
+#garden {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Scale wrapper for each flower project */
+.flower-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform-origin: bottom center;
+}
+
+/* Hide secondary flowers when needed */
+.hidden {
+  display: none !important;
+}
+
+/* Text always on top */
+.scene .text,
+.scene .click,
+.scene .final-text {
+  position: relative;
+  z-index: 10;
+}

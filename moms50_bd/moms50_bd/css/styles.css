@@ -1,0 +1,194 @@
+/* Base layout + scenes */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    font-family: "Georgia", serif;
+    background-color: #120a06;
+    background-image: radial-gradient(circle at the bottom, #2b1b12, #120a06);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #fff;
+    overflow: hidden;
+}
+
+.scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+    text-align: center;
+    padding: 20px;
+    z-index: 2;
+}
+
+.scene.active { opacity: 1; pointer-events: auto; }
+
+.text { font-size: 1.4rem; max-width: 700px; line-height: 1.6; margin-bottom: 40px; animation: fadeUp 1.6s ease; }
+.click { font-size: 0.9rem; opacity: 0.9; margin-top: 20px; }
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); }
+}
+
+/* soil/seed/stem/leaf (kept from original) */
+.soil {
+    width: 100%;
+    height: 120px;
+    background: #2b1b12;
+    position: absolute;
+    bottom: 0;
+}
+
+.seed {
+    width: 14px; height: 14px; background: #8b5a2b; border-radius: 50%; margin-top: 40px;
+}
+
+.stem { width: 6px; height: 0; background: #2ecc71; animation: growStem 4s forwards; }
+@keyframes growStem { to { height: 200px; } }
+
+.leaf {
+    width: 40px; height: 20px; background: #27ae60; border-radius: 20px 20px 0 20px;
+    margin: 10px; opacity: 0; animation: leafIn 1.5s forwards;
+}
+@keyframes leafIn { to { opacity: 1; } }
+
+/* ROSE SYSTEM
+   Each .rose element is populated with .petal children (created by JS).
+   Petals use a CSS variable --rot for rotation placement and --d for stagger delay.
+*/
+.rose-wrap {
+    display: inline-block;
+    transform-style: preserve-3d;
+    perspective: 900px;
+    transition: transform 400ms ease;
+    will-change: transform;
+}
+
+/* living sway for the whole rose group */
+@keyframes wrapSway {
+    0%   { transform: rotateX(-3deg) rotateY(-6deg); }
+    50%  { transform: rotateX(4deg) rotateY(6deg); }
+    100% { transform: rotateX(-3deg) rotateY(-6deg); }
+}
+.rose-wrap { animation: wrapSway 6s ease-in-out infinite; }
+
+/* Rose base (container) */
+.rose {
+    width: 72px;
+    height: 72px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    pointer-events: auto;
+    display: block;
+}
+
+/* a small center bud */
+.rose .bud {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 22px; height: 22px;
+    transform: translate(-50%, -50%) translateZ(18px);
+    border-radius: 50%;
+    /* deeper red tones for a rich red bud */
+    background: radial-gradient(circle at 40% 30%, #fff6f6 6%, #ff2424 34%, #6a0000 100%);
+    box-shadow: inset -2px -6px 8px rgba(0,0,0,0.35), 0 8px 18px rgba(0,0,0,0.45);
+}
+
+/* petal shape */
+.rose .petal {
+    --rot: 0deg;
+    --d: 0s; /* animation delay */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /* slightly narrower / taller petals for a more realistic rose */
+    width: 38px;
+    height: 56px;
+    transform-origin: 50% 88%; /* pivot near bottom of petal */
+    border-radius: 50% 50% 42% 42%;
+    /* strong red gradient */
+    background: radial-gradient(circle at 50% 28%, #ffecec 4%, #e60000 36%, #5b0000 95%);
+    box-shadow: inset -3px -6px 8px rgba(0,0,0,0.28);
+    transform: translate(-50%, -50%) rotate(var(--rot)) translateY(8px) scale(0.18) rotateX(36deg);
+    opacity: 0;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    /* ensure the bloom ends in final state */
+    animation: petalBloom 900ms cubic-bezier(.2,.9,.3,1) forwards;
+    animation-delay: var(--d);
+}
+
+/* subtle inner highlight for richer petal look */
+.rose .petal::after {
+    content: "";
+    position: absolute;
+    left: 12%;
+    top: 8%;
+    width: 74%;
+    height: 56%;
+    background: radial-gradient(circle at 40% 30%, rgba(255,255,255,0.06), rgba(255,0,0,0.02) 60%);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.75;
+    transform: translateZ(6px);
+}
+
+/* bloom animation for petals */
+@keyframes petalBloom {
+    0% {
+        transform: translate(-50%, -50%) rotate(var(--rot)) translateY(18px) scale(0.18) rotateX(38deg);
+        opacity: 0;
+    }
+    60% {
+        transform: translate(-50%, -50%) rotate(var(--rot)) translateY(-2px) scale(1.05) rotateX(2deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(var(--rot)) translateY(0px) scale(1) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+/* small pulsing + sway for each petal to feel alive */
+@keyframes petalLive {
+    0%   { transform: translate(-50%, -50%) rotate(var(--rot)) translateY(0) translateZ(0) rotateX(0); }
+    50%  { transform: translate(-50%, -50%) rotate(calc(var(--rot) + 3deg)) translateY(-2px) translateZ(6px) rotateX(3deg); }
+    100% { transform: translate(-50%, -50%) rotate(var(--rot)) translateY(0) translateZ(0) rotateX(0); }
+}
+
+/* apply tiny independent motion to petals after bloom
+   keep the bloom frame persistent (forwards) and run the live motion on top */
+.rose.live .petal {
+    animation-name: petalBloom, petalLive;
+    animation-duration: 900ms, 6s;
+    animation-timing-function: cubic-bezier(.2,.9,.3,1), ease-in-out;
+    animation-fill-mode: forwards, both; /* petalBloom stays in final pose */
+    animation-iteration-count: 1, infinite;
+    animation-delay: var(--d), calc(var(--d) + 0.6s);
+}
+
+/* hover lift */
+.rose-wrap:hover { transform: translateY(-6px) scale(1.02); }
+
+/* variations for layout */
+.rose-bush { display: flex; flex-wrap: wrap; width: 320px; justify-content: center; gap: 6px; margin-top: 20px; perspective: 900px; }
+.bouquet { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; margin-top: 30px; perspective: 1100px; }
+
+.final-text { font-size: 2rem; margin-top: 30px; animation: fadeUp 1.6s ease; }
+
+@media (max-width: 600px) {
+    .text { font-size: 1.1rem; }
+    .final-text { font-size: 1.5rem; }
+    .rose { width: 56px; height: 56px; }
+    .rose .petal { width: 34px; height: 48px; }
+}
