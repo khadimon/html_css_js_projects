@@ -8,8 +8,8 @@ let currentScene = 0;
 
 function scaleScene() {
   if (!stage) return;
-  const baseW = 1200;
-  const baseH = 800;
+  const baseW = 1400;
+  const baseH = 900;
   const scaleX = window.innerWidth / baseW;
   const scaleY = window.innerHeight / baseH;
   const scale = Math.min(scaleX, scaleY, 1);
@@ -176,17 +176,17 @@ function runGarden() {
 
     // Add a centered middle row of 5 flower projects (side-by-side, equal spacing)
     setTimeout(() => {
-        const centerY = Math.round(window.innerHeight * 0.30);
+        const centerY = Math.round(window.innerHeight * 0.34);
         const row1Y = centerY + verticalSpacing * 2;
         const row2Y = centerY + verticalSpacing;
         const row3Y = centerY;
-        const row4Y = centerY - verticalSpacing - 80;
-        const row5Y = centerY - verticalSpacing * 2 - 80;
+        const row4Y = centerY - verticalSpacing - 5;
+        const row5Y = centerY - verticalSpacing * 2 + 30;
 
         const row5 = createCenteredRow({
           count: 1,
           y: row5Y,
-          scale: 0.18,
+          scale: 0.14,
           hideSecondary: true, // hide flower--2 and flower--3
           zIndex: 10,
           offset: false,
