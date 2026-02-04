@@ -15,7 +15,11 @@ function scaleScene() {
   const scale = Math.min(scaleX, scaleY, 1);
   stage.style.width = `${baseW}px`;
   stage.style.height = `${baseH}px`;
-  stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  stage.style.setProperty('--scale', scale);
+  stage.style.position = 'fixed';
+  stage.style.top = '50%';
+  stage.style.left = '50%';
+  stage.style.transformOrigin = 'center center';
 }
 
 scaleScene();
