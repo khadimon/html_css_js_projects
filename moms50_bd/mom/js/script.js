@@ -1,8 +1,26 @@
 const scenes = document.querySelectorAll(".scene");
 const garden = document.getElementById("garden");
 const flowerTemplate = document.getElementById("flower-project");
+const textTop = document.getElementById("text-top");
+const stage = document.getElementById("stage");
 
 let currentScene = 0;
+
+function scaleScene() {
+  if (!stage) return;
+  const baseW = 1200;
+  const baseH = 800;
+  const scaleX = window.innerWidth / baseW;
+  const scaleY = window.innerHeight / baseH;
+  const scale = Math.min(scaleX, scaleY, 1);
+  stage.style.width = `${baseW}px`;
+  stage.style.height = `${baseH}px`;
+  stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+}
+
+scaleScene();
+window.addEventListener("resize", scaleScene);
+window.addEventListener("load", scaleScene);
 
 document.body.addEventListener("click", () => {
   if (currentScene < scenes.length - 1) {
@@ -145,7 +163,7 @@ function createCenteredRow({ count = 5, y = 320, scale = 0.28, hideSecondary = f
 
 function runGarden() {
     const bottomY = 0;
-    const verticalSpacing = 130;     // BIG space between rows
+    const verticalSpacing = 150;     // BIG space between rows
     const horizontalSpacing = 16;    // space between flowers
     const rows = 6;                  // number of rows in field
     const maxFlowersPerRow = 5;
@@ -158,16 +176,17 @@ function runGarden() {
 
     // Add a centered middle row of 5 flower projects (side-by-side, equal spacing)
     setTimeout(() => {
-        const middleY = bottomY + Math.round((rows / 2) * verticalSpacing) + 40;
-        const lowerY = middleY - Math.round(verticalSpacing * 1.4);
-        const lower2Y = lowerY - Math.round(verticalSpacing * 1.2);
-        const lower3Y = lower2Y - Math.round(verticalSpacing * 1.1);
-        const lower4Y = lower3Y - Math.round(verticalSpacing * 1.0);
+        const centerY = Math.round(window.innerHeight * 0.30);
+        const row1Y = centerY + verticalSpacing * 2;
+        const row2Y = centerY + verticalSpacing;
+        const row3Y = centerY;
+        const row4Y = centerY - verticalSpacing - 80;
+        const row5Y = centerY - verticalSpacing * 2 - 80;
 
         const row5 = createCenteredRow({
           count: 1,
-          y: lower4Y,
-          scale: 0.28,
+          y: row5Y,
+          scale: 0.18,
           hideSecondary: true, // hide flower--2 and flower--3
           zIndex: 10,
           offset: false,
@@ -178,8 +197,8 @@ function runGarden() {
 
         const row4 = createCenteredRow({
           count: 2,
-          y: lower3Y,
-          scale: 0.17,
+          y: row4Y,
+          scale: 0.12,
           hideSecondary: false,
           hidePrimary: true, // hide flower--1
           zIndex: 9,
@@ -191,8 +210,8 @@ function runGarden() {
 
         const row3 = createCenteredRow({
           count: 5,
-          y: lower2Y,
-          scale: 0.19,
+          y: row3Y,
+          scale: 0.13,
           hideSecondary: false,
           zIndex: 8,
           offset: false,
@@ -203,8 +222,8 @@ function runGarden() {
 
         const row2 = createCenteredRow({
           count: 5,
-          y: lowerY,
-          scale: 0.21,
+          y: row2Y,
+          scale: 0.14,
           hideSecondary: false,
           zIndex: 7,
           offset: true, // offset so this row sits under the gaps of the middle row
@@ -215,8 +234,8 @@ function runGarden() {
 
         const row1 = createCenteredRow({
           count: 5,
-          y: middleY,
-          scale: 0.22,
+          y: row1Y,
+          scale: 0.15,
           hideSecondary: false,
           zIndex: 3,
           offset: false,
@@ -225,13 +244,17 @@ function runGarden() {
           startHidden: true
         });
 
-        // Unhide sequence: wait 2s, then row5, row4, row3, row2, row1 every 2s
+        // Unhide sequence: row5, row4, row3, text, row2, row1 (1s apart)
         const reveal = [row5, row4, row3, row2, row1];
         reveal.forEach((row, idx) => {
           setTimeout(() => {
             row?.classList.remove('is-hidden');
-          }, 2000 + idx * 2000);
+          }, idx * 1000);
         });
+
+        setTimeout(() => {
+          textTop?.classList.remove('is-hidden');
+        }, 3 * 1000);
     }, delay + 300);
 
     // 🌸 2. Middle rows removed (bottom flowers)
