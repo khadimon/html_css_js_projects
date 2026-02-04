@@ -18,7 +18,7 @@ body {
   background-color: var(--dark-color);
   overflow: hidden;
   perspective: 1000px;
-  padding: 50px 0px;
+  padding: 50px 0px 150px 0px;
 }
 
 .night {
@@ -38,10 +38,11 @@ body {
 
 .flower {
   position: absolute;
-  bottom: 10vmin;
+  bottom: 50%;
   transform-origin: bottom center;
   z-index: 10;
   --fl-speed: 0.8s;
+  margin-bottom: 30vmin;
 }
 .flower--1 {
   animation: moving-flower-1 4s linear infinite;
